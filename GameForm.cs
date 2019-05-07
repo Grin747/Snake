@@ -11,7 +11,7 @@ namespace snake
     class GameForm : Form
     {
         Timer time;
-        ICell[,] map;
+        Cell[,] map;
         Point direction;
         
         public GameForm()
@@ -34,9 +34,9 @@ namespace snake
             time.Start();
         }
 
-        ICell[,] CreateMap(string[] lines)
+        Cell[,] CreateMap(string[] lines)
         {
-            var res = new ICell[lines.Length, lines[0].Length];
+            var res = new Cell[lines.Length, lines[0].Length];
             for (int i = 0; i < lines.Length; i++)
                 for (int j = 0; j < lines[i].Length; j++)
                 {
@@ -45,7 +45,7 @@ namespace snake
                     {
                         case ' ': res[i, j] = null;
                             continue;
-                        case 'S': res[i, j] = new Stone(j*32, i*32);
+                        case 'S': res[i, j] = new Cell(j*32, i*32);
                             continue;
                         case 'B':
                             continue;
@@ -69,12 +69,20 @@ namespace snake
             switch (e.KeyCode)
             {
                 case Keys.Up:
+                    direction.X = -1;
+                    direction.Y = 0;
                     break;
                 case Keys.Down:
+                    direction.X = 1;
+                    direction.Y = 0;
                     break;
                 case Keys.Left:
+                    direction.X = 0;
+                    direction.Y = -1;
                     break;
                 case Keys.Right:
+                    direction.X = 0;
+                    direction.Y = 1;
                     break;
             }
         }
