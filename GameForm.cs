@@ -19,12 +19,12 @@ namespace snake
             ControlBox = false;
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             StartPosition = FormStartPosition.CenterScreen;
-            BackgroundImage = Image.FromFile("res//Wall.png");
+            BackgroundImage = Image.FromFile("..//..//res//tex//Wall.png");
             BackgroundImageLayout = ImageLayout.Tile;
             DoubleBuffered = true;
             direction = new Point(1, 0);
 
-            map = CreateMap(File.ReadAllLines("res//1_lvl.txt"));
+            map = CreateMap(File.ReadAllLines("..//..//res//lvl//1.txt"));
             Size = new Size(map.GetLength(1)*32, map.GetLength(0)*32);
 
 

@@ -9,7 +9,7 @@ namespace snake
 
         public Cell(int x, int y)
         {
-            texture = Image.FromFile("res//Stone.png");
+            texture = Image.FromFile("..//..//res//tex//Stone.png");
             rect = new Rectangle(x, y, 32, 32);
         }
 
