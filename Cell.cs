@@ -2,15 +2,15 @@
 
 namespace snake
 {
-    internal class Cell
+    public abstract class Cell
     {
-        Image texture;
         Rectangle rect;
+        Image texture;
 
-        public Cell(int x, int y)
+        public Cell(int x, int y, Image img)
         {
-            texture = Image.FromFile("..//..//res//tex//Stone.png");
-            rect = new Rectangle(x, y, 32, 32);
+            texture = img;
+            rect = new Rectangle(x * 32, y * 32, 32, 32);
         }
 
         public void Draw(Graphics g)

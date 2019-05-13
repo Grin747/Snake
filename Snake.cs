@@ -9,9 +9,5 @@ namespace snake
 {
     class Snake
     {
-        public void Draw(Graphics g)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

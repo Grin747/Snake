@@ -12,8 +12,9 @@ namespace snake
     {
         Timer time;
         Cell[,] map;
-        Point direction;
-        
+        Snake snake;
+        Direction direction = Direction.Right;
+
         public GameForm()
         {
             ControlBox = false;
@@ -22,39 +23,41 @@ namespace snake
             BackgroundImage = Image.FromFile("..//..//res//tex//Wall.png");
             BackgroundImageLayout = ImageLayout.Tile;
             DoubleBuffered = true;
-            direction = new Point(1, 0);
 
             map = CreateMap(File.ReadAllLines("..//..//res//lvl//1.txt"));
-            Size = new Size(map.GetLength(1)*32, map.GetLength(0)*32);
+            Size = new Size(map.GetLength(0)*32, map.GetLength(1)*32);
 
+            snake = new Snake();
+
+            KeyDown += GameForm_KeyDown;
 
             time = new Timer();
-            time.Interval = 1000;
+            time.Interval = 200;
             time.Tick += Tick;
             time.Start();
         }
 
         Cell[,] CreateMap(string[] lines)
         {
-            var res = new Cell[lines.Length, lines[0].Length];
-            for (int i = 0; i < lines.Length; i++)
-                for (int j = 0; j < lines[i].Length; j++)
+            var res = new Cell[lines[0].Length, lines.Length];
+            for (int i = 0; i < res.GetLength(0); i++)
+                for (int j = 0; j < res.GetLength(1); j++)
                 {
-                    //TODO
-                    switch (lines[i][j])
+                    switch (lines[j][i])
                     {
                         case ' ': res[i, j] = null;
                             continue;
-                        case 'S': res[i, j] = new Cell(j*32, i*32);
-                            continue;
-                        case 'B':
+                        case 'S': res[i, j] = new Stone(i, j);
                             continue;
                     }
                 }
             return res;
         }
 
-        void Tick(object sender, EventArgs e) => Invalidate();
+        void Tick(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
 
         protected override void OnPaint (PaintEventArgs e)
         {
@@ -69,20 +72,16 @@ namespace snake
             switch (e.KeyCode)
             {
                 case Keys.Up:
-                    direction.X = -1;
-                    direction.Y = 0;
+                    direction = Direction.Up;
                     break;
                 case Keys.Down:
-                    direction.X = 1;
-                    direction.Y = 0;
+                    direction = Direction.Down;
                     break;
                 case Keys.Left:
-                    direction.X = 0;
-                    direction.Y = -1;
+                    direction = Direction.Left;
                     break;
                 case Keys.Right:
-                    direction.X = 0;
-                    direction.Y = 1;
+                    direction = Direction.Right;
                     break;
             }
         }
