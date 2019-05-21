@@ -11,79 +11,36 @@ namespace snake
     class GameForm : Form
     {
         Timer time;
-        Cell[,] map;
+        Map map;
         Snake snake;
-        Direction direction = Direction.Right;
+        Graphics g;
 
         public GameForm()
         {
             ControlBox = false;
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.Manual;
             BackgroundImage = Image.FromFile("..//..//res//tex//Wall.png");
             BackgroundImageLayout = ImageLayout.Tile;
             DoubleBuffered = true;
+            g = this.CreateGraphics();
 
-            map = CreateMap(File.ReadAllLines("..//..//res//lvl//1.txt"));
-            Size = new Size(map.GetLength(0)*32, map.GetLength(1)*32);
+            map = new Map(File.ReadAllLines("..//..//res//lvl//1.txt"));
+            Size = map.WindowSize;
 
-            snake = new Snake();
-
-            KeyDown += GameForm_KeyDown;
+            snake = new Snake(0 , 0, 4, Direction.Right);
 
             time = new Timer();
-            time.Interval = 200;
+            time.Interval = 1000;
             time.Tick += Tick;
             time.Start();
         }
 
-        Cell[,] CreateMap(string[] lines)
-        {
-            var res = new Cell[lines[0].Length, lines.Length];
-            for (int i = 0; i < res.GetLength(0); i++)
-                for (int j = 0; j < res.GetLength(1); j++)
-                {
-                    switch (lines[j][i])
-                    {
-                        case ' ': res[i, j] = null;
-                            continue;
-                        case 'S': res[i, j] = new Stone(i, j);
-                            continue;
-                    }
-                }
-            return res;
-        }
-
         void Tick(object sender, EventArgs e)
         {
-            Invalidate();
-        }
-
-        protected override void OnPaint (PaintEventArgs e)
-        {
-            foreach(var cell in map)
-                if(cell != null) cell.Draw(e.Graphics);
-        }
-
-
-
-        void GameForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Up:
-                    direction = Direction.Up;
-                    break;
-                case Keys.Down:
-                    direction = Direction.Down;
-                    break;
-                case Keys.Left:
-                    direction = Direction.Left;
-                    break;
-                case Keys.Right:
-                    direction = Direction.Right;
-                    break;
-            }
+            Refresh();
+            map.CreateFood();
+            map.Draw(g);
         }
     }
 }

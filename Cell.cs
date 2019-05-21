@@ -7,6 +7,9 @@ namespace snake
         Rectangle rect;
         Image texture;
 
+        public int X => rect.X;
+        public int Y => rect.Y;
+
         public Cell(int x, int y, Image img)
         {
             texture = img;
