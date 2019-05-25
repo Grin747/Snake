@@ -10,11 +10,10 @@ namespace snake
     {
         public Cell[,] Cells { get; private set; }
         public Size WindowSize { get; }
-        Random rnd;
+        Random rnd = new Random();
 
         public Map(string[] lines)
         {
-            rnd = new Random();
             WindowSize = new Size(lines[0].Length * 32, lines.Length * 32);
             Cells = new Cell[lines[0].Length, lines.Length];
             for (int i = 0; i < Cells.GetLength(0); i++)
@@ -34,7 +33,14 @@ namespace snake
 
         public void Draw(Graphics g)
         {
-            foreach (var cell in Cells) if (cell != null) cell.Draw(g);
+            foreach (var cell in Cells)
+                if (cell != null)
+                    cell.Draw(g);
+        }
+
+        public void CreateRunningFood()
+        {
+
         }
 
         public void CreateFood()
@@ -45,7 +51,7 @@ namespace snake
                 x = rnd.Next(Cells.GetLength(0));
                 y = rnd.Next(Cells.GetLength(1));
             }
-            while ((Cells[x, y] is Stone));
+            while (!(Cells[x, y] is null));
             Cells[x, y] = new Food(x, y);
         }
     }

@@ -7,8 +7,8 @@ namespace snake
         Rectangle rect;
         Image texture;
 
-        public int X => rect.X;
-        public int Y => rect.Y;
+        public int X => rect.X / 32;
+        public int Y => rect.Y / 32;
 
         public Cell(int x, int y, Image img)
         {
@@ -17,6 +17,11 @@ namespace snake
         }
 
         public void Draw(Graphics g)
+        {
+            g.DrawImage(texture, rect);
+        }
+
+        public void Draw(Graphics g, Rectangle rect)
         {
             g.DrawImage(texture, rect);
         }
