@@ -44,29 +44,39 @@ namespace snake
             switch(direction)
             {
                 case Direction.Right:
-                    nextPart = new Body(current.X + 1, current.Y);
+                    if (current.X == map.Size.Width - 1) nextPart = new Body(0, current.Y);
+                    else nextPart = new Body(current.X + 1, current.Y);
                     break;
+
                 case Direction.Left:
-                    nextPart = new Body(current.X - 1, current.Y);
+                    if (current.X == 0) nextPart = new Body(map.Size.Width - 1, current.Y);
+                    else nextPart = new Body(current.X - 1, current.Y);
                     break;
+
                 case Direction.Up:
-                    nextPart = new Body(current.X, current.Y - 1);
+                    if (current.Y == 0) nextPart = new Body(current.X, map.Size.Height - 1);
+                    else nextPart = new Body(current.X, current.Y - 1);
                     break;
+
                 case Direction.Down:
-                    nextPart = new Body(current.X, current.Y + 1);
+                    if (current.Y == map.Size.Height - 1) nextPart = new Body(current.X, 0);
+                    else nextPart = new Body(current.X, current.Y + 1);
                     break;
             }
+
             if (map.Cells[nextPart.X, nextPart.Y] is Stone)
             {
                 game.Break();
                 return null;
             }
+
             if (map.Cells[nextPart.X, nextPart.Y] is Food)
             {
                 isGrowing = true;
                 map.Cells[nextPart.X, nextPart.Y] = null;
                 map.CreateFood();
             }
+
             return nextPart;
         }
     }

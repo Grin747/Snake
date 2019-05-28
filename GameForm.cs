@@ -25,14 +25,14 @@ namespace snake
             KeyDown += Form_KeyDown;
 
             map = new Map(File.ReadAllLines("..//..//res//lvl//1.txt"));
-            Size = map.WindowSize;
+            Size = new Size(map.Size.Width * 32, map.Size.Height * 32);
 
             map.CreateFood();
 
             snake = new Snake(map, this, 20);
 
             time = new System.Windows.Forms.Timer();
-            time.Interval = 200;
+            time.Interval = 100;
             time.Tick += Tick;
             time.Start();
         }

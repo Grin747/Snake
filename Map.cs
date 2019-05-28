@@ -9,12 +9,12 @@ namespace snake
     class Map
     {
         public Cell[,] Cells { get; private set; }
-        public Size WindowSize { get; }
+        public Size Size { get; }
         Random rnd = new Random();
 
         public Map(string[] lines)
         {
-            WindowSize = new Size(lines[0].Length * 32, lines.Length * 32);
+            Size = new Size(lines[0].Length, lines.Length);
             Cells = new Cell[lines[0].Length, lines.Length];
             for (int i = 0; i < Cells.GetLength(0); i++)
                 for (int j = 0; j < Cells.GetLength(1); j++)
@@ -38,12 +38,7 @@ namespace snake
                     cell.Draw(g);
         }
 
-        public void CreateRunningFood()
-        {
-
-        }
-
-        public void CreateFood()
+        public void CreateFood(bool running = false)
         {
             int x, y;
             do
