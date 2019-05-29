@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
-using System.Threading.Tasks;
 
 namespace snake
 {
@@ -10,11 +7,13 @@ namespace snake
     {
         public Cell[,] Cells { get; private set; }
         public Size Size { get; }
+        public Size WindowSize { get; }
         Random rnd = new Random();
 
         public Map(string[] lines)
         {
             Size = new Size(lines[0].Length, lines.Length);
+            WindowSize = new Size(lines[0].Length * Cell.Resolution, lines.Length * Cell.Resolution);
             Cells = new Cell[lines[0].Length, lines.Length];
             for (int i = 0; i < Cells.GetLength(0); i++)
                 for (int j = 0; j < Cells.GetLength(1); j++)
