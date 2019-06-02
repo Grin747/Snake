@@ -10,7 +10,7 @@ namespace snake
         public Size WindowSize { get; }
         Random rnd = new Random();
 
-        public Map(string[] lines)
+        public Map(string[] lines = null)
         {
             Size = new Size(lines[0].Length, lines.Length);
             WindowSize = new Size(lines[0].Length * Cell.Resolution, lines.Length * Cell.Resolution);

@@ -27,5 +27,8 @@ namespace snake
         {
             g.DrawImage(texture, rect);
         }
+
+        public override bool Equals(object obj) =>
+            !(obj is Cell) || (obj as Cell).X == X && (obj as Cell).Y == Y;
     }
 }

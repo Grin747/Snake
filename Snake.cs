@@ -67,7 +67,6 @@ namespace snake
             if (map.Cells[nextPart.X, nextPart.Y] is Stone)
             {
                 game.Break();
-                return null;
             }
 
             if (map.Cells[nextPart.X, nextPart.Y] is Food)
@@ -75,6 +74,11 @@ namespace snake
                 isGrowing = true;
                 map.Cells[nextPart.X, nextPart.Y] = null;
                 map.CreateFood();
+            }
+
+            if (pieces.Any(x => x.Equals(nextPart)))
+            {
+                game.Break();
             }
 
             return nextPart;
