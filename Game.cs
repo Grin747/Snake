@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 namespace snake
 {
     class Game : Form
     {
+        Menu menu { get; }
         Timer time { get; }
-        bool directionChanged;
+        bool directionChanged { get; set; }
         Snake snake { get; }
         Map map { get; }
+        public int Score { get; set; }
 
-        public Game(string[] lvl = null)
+        public Game(Menu menu, string[] lvl = null)
         {
             ControlBox = false;
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             StartPosition = FormStartPosition.Manual;
-            BackgroundImage = Image.FromFile("..//..//res//tex//Wall.png");
+            BackgroundImage = Image.FromFile(@"../../res/tex/Wall.png");
             BackgroundImageLayout = ImageLayout.Tile;
             DoubleBuffered = true;
             KeyDown += Form_KeyDown;
+            this.menu = menu;
 
             map = new Map(lvl);
             Size = map.WindowSize;
@@ -39,7 +41,8 @@ namespace snake
         {
             time.Stop();
             System.Threading.Thread.Sleep(3000);
-            this.Close();
+            menu.Show();
+            Close();
         }
 
         void Form_KeyDown(object sender, KeyEventArgs e)

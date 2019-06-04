@@ -34,7 +34,7 @@ namespace snake
             else
             {
                 int wigth = rnd.Next(10) + 13;
-                int heigth = rnd.Next(8) + 8;
+                int heigth = rnd.Next(7) + 7;
                 Size = new Size(wigth, heigth);
                 WindowSize = new Size(Size.Width * Cell.Resolution, Size.Height * Cell.Resolution);
                 Cells = new Cell[wigth, heigth];

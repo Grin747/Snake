@@ -71,6 +71,7 @@ namespace snake
 
             if (map.Cells[nextPart.X, nextPart.Y] is Food)
             {
+                game.Score++;
                 isGrowing = true;
                 map.Cells[nextPart.X, nextPart.Y] = null;
                 map.CreateFood();
