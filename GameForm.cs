@@ -1,37 +1,35 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace snake
 {
     class Game : Form
     {
-        System.Windows.Forms.Timer time { get; }
+        Timer time { get; }
         bool directionChanged;
         Snake snake { get; }
         Map map { get; }
-        Image wall = Image.FromFile("..//..//res//tex//Wall.png");
 
-        public Game()
+        public Game(string[] lvl = null)
         {
             ControlBox = false;
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             StartPosition = FormStartPosition.Manual;
-            BackgroundImage = wall;
+            BackgroundImage = Image.FromFile("..//..//res//tex//Wall.png");
             BackgroundImageLayout = ImageLayout.Tile;
             DoubleBuffered = true;
             KeyDown += Form_KeyDown;
 
-            map = new Map(File.ReadAllLines("..//..//res//lvl//1.txt"));
+            map = new Map(lvl);
             Size = map.WindowSize;
 
             map.CreateFood();
 
             snake = new Snake(map, this, 3);
 
-            time = new System.Windows.Forms.Timer();
+            time = new Timer();
             time.Interval = 200;
             time.Tick += Tick;
             time.Start();
@@ -40,7 +38,7 @@ namespace snake
         public void Break()
         {
             time.Stop();
-            Thread.Sleep(3000);
+            System.Threading.Thread.Sleep(3000);
             this.Close();
         }
 
