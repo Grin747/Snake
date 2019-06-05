@@ -40,8 +40,13 @@ namespace snake
                 Cells = new Cell[wigth, heigth];
                 for (int i = rnd.Next(3) + 4; i >= 0; i--)
                 {
-                    int x = rnd.Next(wigth);
-                    int y = rnd.Next(heigth);
+                    int x = rnd.Next(wigth - 1);
+                    int y = rnd.Next(heigth - 1);
+                    if(y == 1)
+                    {
+                        i++;
+                        continue;
+                    }
                     Cells[x, y] = new Stone(x, y);
                 }
             }

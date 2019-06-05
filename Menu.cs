@@ -54,14 +54,14 @@ namespace snake
 
         void Start(object sender, EventArgs e)
         {
-            var game = new Game(this);
+            var game = new Game(this, 1);
             game.Show();
             Hide();
         }
 
         void Custom(object sender, EventArgs e)
         {
-            var game = new Game(this, File.ReadAllLines(@"../../res/lvl/1.txt"));
+            var game = new Game(this, 1, File.ReadAllLines(@"../../res/lvl/1.txt"));
             game.Show();
             Hide();
         }

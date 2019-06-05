@@ -11,9 +11,11 @@ namespace snake
         bool directionChanged { get; set; }
         Snake snake { get; }
         Map map { get; }
+        Label progress { get; }
         public int Score { get; set; }
+        public int LvlNum { get; }
 
-        public Game(Menu menu, string[] lvl = null)
+        public Game(Menu menu, int number, string[] lvl = null)
         {
             ControlBox = false;
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
@@ -23,6 +25,7 @@ namespace snake
             DoubleBuffered = true;
             KeyDown += Form_KeyDown;
             this.menu = menu;
+            LvlNum = number;
 
             map = new Map(lvl);
             Size = map.WindowSize;
@@ -31,10 +34,25 @@ namespace snake
 
             snake = new Snake(map, this, 3);
 
+            progress = new Label()
+            {
+                Location = new Point(0, map.WindowSize.Height - 32),
+                Size = new Size(map.WindowSize.Width, 32),
+                BackColor = Color.White
+            };
+
             time = new Timer();
-            time.Interval = 200;
+            time.Interval = LvlNum < 5 ? 300 - LvlNum * 50 : 50;
             time.Tick += Tick;
             time.Start();
+        }
+
+        public void StartNextLvl()
+        {
+            var lvl = new Game(menu, LvlNum + 1);
+            time.Stop();
+            lvl.Show();
+            Hide();
         }
 
         public void Break()
